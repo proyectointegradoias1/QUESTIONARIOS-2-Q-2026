@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuestionario Interactivo: Modelos Atómicos</title>
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --correct-color: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect-color: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --border-color: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .quiz-container {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px;
+      padding: 30px;
+      margin: 20px 0;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .question-card {
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: #fff;
+    }
+
+    .question-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      background-color: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px 15px;
+      text-align: left;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-color);
+      width: 100%;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background-color: #e2e8f0;
+      border-color: #94a3b8;
+    }
+
+    .option-btn.correct {
+      background-color: var(--correct-bg) !important;
+      border-color: var(--correct-color) !important;
+      color: #14532d !important;
+      font-weight: bold;
+    }
+
+    .option-btn.incorrect {
+      background-color: var(--incorrect-bg) !important;
+      border-color: var(--incorrect-color) !important;
+      color: #7f1d1d !important;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    .feedback.correct-text {
+      color: var(--correct-color);
+    }
+
+    .feedback.incorrect-text {
+      color: var(--incorrect-color);
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn-submit {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .result-box {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f0f9ff;
+      border: 1px solid #bae6fd;
+      text-align: center;
+      display: none;
+    }
+
+    .result-score {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <header>
+    <h1>Cuestionario: Historia de los Modelos Atómicos</h1>
+    <p class="subtitle">Evaluación interactiva basada en el vídeo de profes . TV</p>
+  </header>
+
+  <div id="quizContent">
+    <!-- Pregunta 1 -->
+    <div class="question-card" id="q1">
+      <div class="question-title">1. ¿Qué significa etimológicamente la palabra "átomo", proveniente del griego clásico?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(1, 0, false, this)">A) Partícula con carga positiva.</button>
+        <button class="option-btn" onclick="checkAnswer(1, 1, true, this)">B) Indivisible.</button>
+        <button class="option-btn" onclick="checkAnswer(1, 2, false, this)">C) Esfera pequeña.</button>
+        <button class="option-btn" onclick="checkAnswer(1, 3, false, this)">D) Masa fundamental.</button>
+      </div>
+      <div class="feedback" id="fb1"></div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="question-card" id="q2">
+      <div class="question-title">2. ¿Qué filósofos de la Grecia clásica desarrollaron la primera teoría atómica del universo?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(2, 0, false, this)">A) Sócrates y Platón.</button>
+        <button class="option-btn" onclick="checkAnswer(2, 1, false, this)">B) Aristóteles y Arquímedes.</button>
+        <button class="option-btn" onclick="checkAnswer(2, 2, true, this)">C) Demócrito y Leucipo.</button>
+        <button class="option-btn" onclick="checkAnswer(2, 3, false, this)">D) Pitágoras y Tales de Mileto.</button>
+      </div>
+      <div class="feedback" id="fb2"></div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="question-card" id="q3">
+      <div class="question-title">3. A principios del siglo XIX, John Dalton retomó las ideas de Demócrito y postuló que:</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(3, 0, true, this)">A) Todos los átomos de un mismo elemento tienen la misma masa y propiedades.</button>
+        <button class="option-btn" onclick="checkAnswer(3, 1, false, this)">B) El átomo posee un núcleo positivo muy denso en el centro.</button>
+        <button class="option-btn" onclick="checkAnswer(3, 2, false, this)">C) Los electrones giran en órbitas cuánticas definidas.</button>
+        <button class="option-btn" onclick="checkAnswer(3, 3, false, this)">D) El átomo está compuesto por neutrones y protones.</button>
+      </div>
+      <div class="feedback" id="fb3"></div>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div class="question-card" id="q4">
+      <div class="question-title">4. ¿Qué descubrimiento experimental permitió a J.J. Thomson demostrar la existencia del electrón?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(4, 0, false, this)">A) El bombardeo de partículas alfa sobre láminas de oro.</button>
+        <button class="option-btn" onclick="checkAnswer(4, 1, true, this)">B) El estudio del comportamiento de los rayos catódicos.</button>
+        <button class="option-btn" onclick="checkAnswer(4, 2, false, this)">C) El análisis del espectro de emisión del hidrógeno.</button>
+        <button class="option-btn" onclick="checkAnswer(4, 3, false, this)">D) El experimento de la gota de aceite.</button>
+      </div>
+      <div class="feedback" id="fb4"></div>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div class="question-card" id="q5">
+      <div class="question-title">5. ¿Cómo se conoce comúnmente al modelo atómico de Thomson propuesto en 1899?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(5, 0, false, this)">A) Modelo planetario.</button>
+        <button class="option-btn" onclick="checkAnswer(5, 1, true, this)">B) Modelo del pastel o pudding de pasas.</button>
+        <button class="option-btn" onclick="checkAnswer(5, 2, false, this)">C) Modelo de capas de cebolla.</button>
+        <button class="option-btn" onclick="checkAnswer(5, 3, false, this)">D) Modelo de la nube de probabilidad.</button>
+      </div>
+      <div class="feedback" id="fb5"></div>
+    </div>
+
+    <!-- Pregunta 6 -->
+    <div class="question-card" id="q6">
+      <div class="question-title">6. En el famoso experimento de Rutherford (1911), ¿con qué tipo de partículas bombardeó la fina lámina de oro?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(6, 0, false, this)">A) Rayos X con carga neutra.</button>
+        <button class="option-btn" onclick="checkAnswer(6, 1, false, this)">B) Electrones de alta velocidad (rayos beta).</button>
+        <button class="option-btn" onclick="checkAnswer(6, 2, true, this)">C) Partículas alfa (con dos cargas positivas).</button>
+        <button class="option-btn" onclick="checkAnswer(6, 3, false, this)">D) Neutrones térmicos.</button>
+      </div>
+      <div class="feedback" id="fb6"></div>
+    </div>
+
+    <!-- Pregunta 7 -->
+    <div class="question-card" id="q7">
+      <div class="question-title">7. ¿Qué deducción principal obtuvo Rutherford al observar que la MAYORÍA de las partículas atravesaban la lámina sin desviarse?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(7, 0, false, this)">A) Que los electrones absorbían las partículas alfa.</button>
+        <button class="option-btn" onclick="checkAnswer(7, 1, true, this)">B) Que el átomo está prácticamente vacío.</button>
+        <button class="option-btn" onclick="checkAnswer(7, 2, false, this)">C) Que el núcleo atómico era enorme y de carga negativa.</button>
+        <button class="option-btn" onclick="checkAnswer(7, 3, false, this)">D) Que el oro era un elemento transparente a la radiación.</button>
+      </div>
+      <div class="feedback" id="fb7"></div>
+    </div>
+
+    <!-- Pregunta 8 -->
+    <div class="question-card" id="q8">
+      <div class="question-title">8. Según el modelo planetario de Rutherford, ¿qué partículas ocupan la corteza girando alrededor del núcleo?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(8, 0, false, this)">A) Protones.</button>
+        <button class="option-btn" onclick="checkAnswer(8, 1, false, this)">B) Neutrones.</button>
+        <button class="option-btn" onclick="checkAnswer(8, 2, true, this)">C) Electrones.</button>
+        <button class="option-btn" onclick="checkAnswer(8, 3, false, this)">D) Positrones.</button>
+      </div>
+      <div class="feedback" id="fb8"></div>
+    </div>
+
+    <!-- Pregunta 9 -->
+    <div class="question-card" id="q9">
+      <div class="question-title">9. En el modelo de Niels Bohr (1913), ¿qué ocurre con las órbitas electrónicas en cuanto a su energía?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(9, 0, true, this)">A) Las órbitas más cercanas al núcleo tienen menos energía que las más alejadas.</button>
+        <button class="option-btn" onclick="checkAnswer(9, 1, false, this)">B) Todas las órbitas tienen exactamente la misma energía independientemente de la distancia.</button>
+        <button class="option-btn" onclick="checkAnswer(9, 2, false, this)">C) La energía de las órbitas aumenta a medida que el electrón se acerca al núcleo.</button>
+        <button class="option-btn" onclick="checkAnswer(9, 3, false, this)">D) Los electrones emiten energía continuamente mientras giran en su propia órbita.</button>
+      </div>
+      <div class="feedback" id="fb9"></div>
+    </div>
+
+    <!-- Pregunta 10 -->
+    <div class="question-card" id="q10">
+      <div class="question-title">10. Según el modelo de Bohr, ¿cuándo emite energía un electrón en forma de fotón?</div>
+      <div class="options-container">
+        <button class="option-btn" onclick="checkAnswer(10, 0, false, this)">A) Cuando salta de una órbita interna a una más externa (excitación).</button>
+        <button class="option-btn" onclick="checkAnswer(10, 1, true, this)">B) Cuando pasa de una órbita externa más energética a una más interna.</button>
+        <button class="option-btn" onclick="checkAnswer(10, 2, false, this)">C) Mientras permanece girando en su órbita estacionaria sin cambiar de nivel.</button>
+        <button class="option-btn" onclick="checkAnswer(10, 3, false, this)">D) Cuando choca frontalmente contra el núcleo positivo.</button>
+      </div>
+      <div class="feedback" id="fb10"></div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-submit" onclick="showFinalScore()">Finalizar Cuestionario</button>
+    </div>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <h2>Resultado Final</h2>
+    <div class="result-score" id="scoreText">0 / 10</div>
+    <p id="scoreComment" style="margin-top: 10px; font-weight: 500;"></p>
+  </div>
+</div>
+
+<script>
+  const correctIndices = {
+    1: 1, // B
+    2: 2, // C
+    3: 0, // A
+    4: 1, // B
+    5: 1, // B
+    6: 2, // C
+    7: 1, // B
+    8: 2, // C
+    9: 0, // A
+    10: 1 // B
+  };
+
+  const answeredStatus = {};
+
+  function checkAnswer(questionNum, chosenIndex, isCorrect, clickedBtn) {
+    if (answeredStatus[questionNum] !== undefined) return;
+
+    answeredStatus[questionNum] = isCorrect;
+    const card = document.getElementById('q' + questionNum);
+    const buttons = card.querySelectorAll('.option-btn');
+    const feedback = document.getElementById('fb' + questionNum);
+
+    const correctIdx = correctIndices[questionNum];
+
+    buttons.forEach(function(btn, idx) {
+      btn.disabled = true;
+      if (idx === correctIdx) {
+        btn.classList.add('correct');
+      }
+    });
+
+    if (!isCorrect) {
+      clickedBtn.classList.add('incorrect');
+      feedback.textContent = "Incorrecto. La respuesta correcta está marcada en verde.";
+      feedback.className = "feedback incorrect-text";
+    } else {
+      feedback.textContent = "¡Correcto!";
+      feedback.className = "feedback correct-text";
+    }
+
+    feedback.style.display = "block";
+  }
+
+  function showFinalScore() {
+    let score = 0;
+    const total = 10;
+
+    for (let i = 1; i <= total; i++) {
+      if (answeredStatus[i] === true) {
+        score++;
+      }
+    }
+
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const scoreComment = document.getElementById('scoreComment');
+
+    scoreText.textContent = score + " / " + total + " (" + (score / total * 10).toFixed(1) + " puntos)";
+
+    if (score === 10) {
+      scoreComment.textContent = "¡Excelente! Has comprendido perfectamente la evolución de los modelos atómicos.";
+      scoreComment.style.color = "#16a34a";
+    } else if (score >= 6) {
+      scoreComment.textContent = "¡Buen trabajo! Tienes un buen dominio de la historia del átomo.";
+      scoreComment.style.color = "#2563eb";
+    } else {
+      scoreComment.textContent = "Te recomendamos volver a ver el vídeo para repasar las aportaciones de cada científico.";
+      scoreComment.style.color = "#dc2626";
+    }
+
+    resultBox.style.display = "block";
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
