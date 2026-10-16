@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario: El Modelo Estándar de Física de Partículas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .question p {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 12px 15px;
+            border: 2px solid #dcdde1;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            font-size: 1em;
+        }
+        .option:hover {
+            background-color: #f1f2f6;
+            border-color: #7f8fa6;
+        }
+        /* Clases para la corrección al pinchar */
+        .option.correct {
+            background-color: #4cd137 !important; /* Verde */
+            color: white;
+            border-color: #44bd32 !important;
+        }
+        .option.incorrect {
+            background-color: #ff9f43 !important; /* Naranja */
+            color: white;
+            border-color: #ee5253 !important;
+        }
+        /* Desactivar opciones una vez contestadas */
+        .option.disabled {
+            pointer-events: none;
+        }
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+        #submit-btn:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            font-size: 1.2em;
+            text-align: center;
+            border-radius: 6px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Cuestionario: El Universo y la Materia</h1>
+    <p class="subtitle">Basado en el vídeo "¿De qué está compuesto el Universo? - El Modelo Estándar"</p>
+
+    <div id="quiz"></div>
+
+    <button id="submit-btn" onclick="showResults()">Ver Puntuación Final</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    // Base de datos de preguntas y opciones
+    const quizData = [
+        {
+            question: "1. ¿Qué significa la raíz griega de la palabra 'átomo'?",
+            options: [
+                { text: "'a' (sin) y 'tomo' (peso), es decir, sin peso", isCorrect: false },
+                { text: "'a' (no) y 'tomo' (romper), es decir, indivisible", isCorrect: true },
+                { text: "'a' (sin) y 'tomo' (carga), es decir, neutro", isCorrect: false },
+                { text: "'a' (con) y 'tomo' (fuerza), es decir, poderoso", isCorrect: false }
+            ]
+        },
+        {
+            question: "2. ¿Quiénes fueron los dos padres de la teoría atómica en la antigua Grecia?",
+            options: [
+                { text: "Aristóteles y Platón", isCorrect: false },
+                { text: "Sócrates y Pitágoras", isCorrect: false },
+                { text: "Leucipo y Demócrito", isCorrect: true },
+                { text: "Arquímedes y Euclides", isCorrect: false }
+            ]
+        },
+        {
+            question: "3. A principios de 1800, ¿qué científico inglés dio con una prueba indirecta de la existencia de los átomos?",
+            options: [
+                { text: "John Dalton", isCorrect: true },
+                { text: "Michael Faraday", isCorrect: false },
+                { text: "Isaac Newton", isCorrect: false },
+                { text: "James Clerk Maxwell", isCorrect: false }
+            ]
+        },
+        {
+            question: "4. En el modelo estándar, ¿cuáles son las dos grandes familias en las que se agrupan las partículas?",
+            options: [
+                { text: "Átomos y moléculas", isCorrect: false },
+                { text: "Protones y electrones", isCorrect: false },
+                { text: "Bosones y fermiones", isCorrect: true },
+                { text: "Quarks y gluones", isCorrect: false }
+            ]
+        },
+        {
+            question: "5. ¿Cuál es la función fundamental de los bosones, como el fotón o el gluón?",
+            options: [
+                { text: "Dar masa a los átomos", isCorrect: false },
+                { text: "Orbitar alrededor del núcleo atómico", isCorrect: false },
+                { text: "Formar la estructura de los protones", isCorrect: false },
+                { text: "Transmitir las fuerzas fundamentales", isCorrect: true }
+            ]
+        },
+        {
+            question: "6. ¿Qué característica distingue principalmente a los fermiones respecto a su espín?",
+            options: [
+                { text: "Tienen un espín semientero (1/2, 3/2, etc.)", isCorrect: true },
+                { text: "Tienen un espín entero (1, 2, 3, etc.)", isCorrect: false },
+                { text: "Carecen de espín", isCorrect: false },
+                { text: "Tienen espín negativo", isCorrect: false }
+            ]
+        },
+        {
+            question: "7. ¿Qué principio sufren únicamente los fermiones, el cual es fundamental para formar estructuras complejas como los átomos?",
+            options: [
+                { text: "El principio de incertidumbre de Heisenberg", isCorrect: false },
+                { text: "El principio de exclusión de Pauli", isCorrect: true },
+                { text: "El principio de conservación de la energía", isCorrect: false },
+                { text: "El principio de Arquímedes", isCorrect: false }
+            ]
+        },
+        {
+            question: "8. ¿De qué partículas exactas está formado un protón?",
+            options: [
+                { text: "Dos quarks down y un quark up", isCorrect: false },
+                { text: "Un electrón y un neutrino", isCorrect: false },
+                { text: "Dos quarks up y un quark down", isCorrect: true },
+                { text: "Dos leptones y un gluón", isCorrect: false }
+            ]
+        },
+        {
+            question: "9. Según el modelo estándar, ¿cuántas copias, generaciones o 'sabores' de partículas fundamentales existen?",
+            options: [
+                { text: "Una generación", isCorrect: false },
+                { text: "Dos generaciones", isCorrect: false },
+                { text: "Tres generaciones", isCorrect: true },
+                { text: "Cuatro generaciones", isCorrect: false }
+            ]
+        },
+        {
+            question: "10. ¿Qué partícula es descrita como única en su especie por ser la encargada de otorgar masa a todas las partículas del universo?",
+            options: [
+                { text: "El gravitón", isCorrect: false },
+                { text: "El bosón de Higgs", isCorrect: true },
+                { text: "El neutrino tau", isCorrect: false },
+                { text: "El quark top", isCorrect: false }
+            ]
+        }
+    ];
+
+    let score = 0;
+    let answeredQuestions = 0;
+
+    // Función para construir el cuestionario dinámicamente
+    function buildQuiz() {
+        const quizContainer = document.getElementById('quiz');
+        quizData.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+            questionDiv.innerHTML = `<p>${q.question}</p>`;
+            
+            const optionsDiv = document.createElement('div');
+            optionsDiv.classList.add('options');
+            
+            q.options.forEach((opt, oIndex) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('option');
+                optionDiv.innerText = opt.text;
+                // Al hacer clic, se llama a la función de selección
+                optionDiv.onclick = () => selectOption(optionDiv, opt.isCorrect, qIndex);
+                optionsDiv.appendChild(optionDiv);
+            });
+            
+            questionDiv.appendChild(optionsDiv);
+            quizContainer.appendChild(questionDiv);
+        });
+    }
+
+    // Función que evalúa la opción pinchada
+    function selectOption(selectedDiv, isCorrect, qIndex) {
+        const optionsDiv = selectedDiv.parentElement;
+        const allOptions = optionsDiv.querySelectorAll('.option');
+        
+        // Evitar que se responda más de una vez a la misma pregunta
+        if (optionsDiv.classList.contains('answered')) return;
+        
+        optionsDiv.classList.add('answered');
+        answeredQuestions++;
+
+        // Desactivar todas las opciones de esta pregunta
+        allOptions.forEach(opt => opt.classList.add('disabled'));
+
+        if (isCorrect) {
+            selectedDiv.classList.add('correct');
+            score++;
+        } else {
+            selectedDiv.classList.add('incorrect');
+            // Si falla, mostramos automáticamente cuál era la correcta en verde
+            quizData[qIndex].options.forEach((opt, idx) => {
+                if(opt.isCorrect) {
+                    allOptions[idx].classList.add('correct');
+                }
+            });
+        }
+    }
+
+    // Función para calcular y mostrar el resultado final
+    function showResults() {
+        if (answeredQuestions < quizData.length) {
+            alert('Por favor, responde todas las preguntas pinchando en una opción antes de ver la puntuación final.');
+            return;
+        }
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        
+        let message = '';
+        
+        // Lógica de mensajes según puntuación
+        if (score === 10) {
+            message = '¡Nivel máximo! Eres todo un experto en la materia.';
+            resultDiv.style.backgroundColor = '#d4edda';
+            resultDiv.style.color = '#155724';
+        } else if (score >= 7) {
+            message = '¡Estupendo! Has prestado mucha atención a los detalles del vídeo.';
+            resultDiv.style.backgroundColor = '#cce5ff';
+            resultDiv.style.color = '#004085';
+        } else if (score >= 5) {
+            message = '¡Está bien! Aunque te recomendaría darle un repaso rápido para afianzar conceptos.';
+            resultDiv.style.backgroundColor = '#fff3cd';
+            resultDiv.style.color = '#856404';
+        } else {
+            message = 'Debes mejorar. Lo ideal sería volver a ver el vídeo con tranquilidad e intentarlo de nuevo.';
+            resultDiv.style.backgroundColor = '#f8d7da';
+            resultDiv.style.color = '#721c24';
+        }
+
+        resultDiv.innerHTML = `<strong>Puntuación conseguida: ${score} de 10</strong><br><br>${message}`;
+        document.getElementById('submit-btn').style.display = 'none'; // Oculta el botón tras finalizar
+    }
+
+    // Inicializamos el cuestionario al cargar
+    buildQuiz();
+</script>
+</body>
+</html>
