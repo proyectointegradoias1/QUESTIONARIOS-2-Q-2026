@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario: Espectros Atómicos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        /* Clases dinámicas añadidas por JavaScript */
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario sobre Espectros Atómicos</h1>
+
+    <div id="quiz">
+        <!-- Pregunta 1 -->
+        <div class="question-container">
+            <div class="question-text">1. ¿Qué es principalmente un espectro atómico de emisión?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Un fondo luminoso continuo con líneas oscuras intercaladas.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Un conjunto de radiaciones luminosas (líneas brillantes) emitidas por un elemento en estado gaseoso al ser excitado.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El resultado de pasar la luz solar directa por un prisma.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Una radiación continua independiente del elemento químico.</div>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div class="question-container">
+            <div class="question-text">2. En un espectro de absorción, ¿qué indican las líneas oscuras?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Las frecuencias de luz exactas que han sido absorbidas por los átomos del gas.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Las frecuencias donde el gas emite energía adicional.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Un defecto en el prisma o red de difracción.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La ausencia total de luz blanca al inicio del experimento.</div>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div class="question-container">
+            <div class="question-text">3. ¿Qué relación hay entre el espectro de emisión y el de absorción de un mismo elemento?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) No tienen ninguna relación entre sí.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El de emisión siempre tiene el doble de líneas que el de absorción.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Las líneas brillantes de emisión coinciden exactamente con las frecuencias de las líneas oscuras de absorción.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El espectro de absorción sólo aparece en elementos sólidos y el de emisión en líquidos.</div>
+        </div>
+
+        <!-- Pregunta 4 -->
+        <div class="question-container">
+            <div class="question-text">4. ¿Por qué se afirma que el espectro atómico es como la "huella dactilar" de un elemento?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Porque todos los elementos tienen un espectro continuo similar al de la piel.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Porque las líneas espectrales se borran si se mezclan dos gases.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Porque cambia de forma dependiendo del espectrómetro que se use.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) Porque cada elemento químico tiene un conjunto de líneas espectrales único e irrepetible.</div>
+        </div>
+
+        <!-- Pregunta 5 -->
+        <div class="question-container">
+            <div class="question-text">5. Según la física cuántica, ¿qué ocurre en un átomo para que se genere una línea de emisión luminosa?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Un neutrón sale disparado del núcleo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Un electrón desciende de un nivel de mayor energía a otro de menor energía, emitiendo un fotón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Un electrón absorbe luz para subir a un nivel de mayor energía.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Los protones vibran creando ondas electromagnéticas visibles.</div>
+        </div>
+
+        <!-- Pregunta 6 -->
+        <div class="question-container">
+            <div class="question-text">6. ¿Qué tipo de espectro se obtiene al descomponer luz blanca (como la de una bombilla incandescente tradicional) con un prisma?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Un espectro continuo con todos los colores del arco iris.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Un espectro discontinuo de emisión.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Un espectro de bandas oscuras.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Solo luz ultravioleta.</div>
+        </div>
+
+        <!-- Pregunta 7 -->
+        <div class="question-container">
+            <div class="question-text">7. ¿Cuál fue el primer modelo atómico capaz de explicar matemáticamente y predecir las líneas del espectro del hidrógeno?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El modelo de Thomson.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El modelo de Rutherford.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El modelo de Dalton.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) El modelo de Bohr.</div>
+        </div>
+
+        <!-- Pregunta 8 -->
+        <div class="question-container">
+            <div class="question-text">8. En astrofísica, analizar la luz que nos llega de una estrella mediante espectroscopía permite principalmente conocer...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El peso exacto en kilogramos de la estrella.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Su composición química, identificando los elementos que contiene.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Cuántos planetas orbitan alrededor de ella.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La fecha en la que se formó el sistema estelar.</div>
+        </div>
+
+        <!-- Pregunta 9 -->
+        <div class="question-container">
+            <div class="question-text">9. ¿Qué instrumento se utiliza comúnmente en el laboratorio para observar y analizar estos espectros atómicos?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) El espectroscopio o espectrómetro.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El microscopio óptico.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) La balanza analítica.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El tubo de rayos catódicos cerrado.</div>
+        </div>
+
+        <!-- Pregunta 10 -->
+        <div class="question-container">
+            <div class="question-text">10. ¿Cómo es el espectro de la luz que proporciona el Sol visto desde la superficie de la Tierra en alta resolución?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Estrictamente continuo, sin ninguna interrupción en los colores.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Un fondo continuo cruzado por finas líneas oscuras de absorción (líneas de Fraunhofer).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Compuesto exclusivamente por líneas de emisión brillantes sobre fondo oscuro.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Una única franja de color amarillo puro.</div>
+        </div>
+    </div>
+
+    <!-- Contenedor para mostrar los resultados -->
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            // Obtenemos el contenedor de la pregunta actual
+            const questionContainer = selectedOption.parentElement;
+            
+            // Verificamos si la pregunta ya ha sido respondida
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            // Marcamos la pregunta como respondida
+            questionContainer.setAttribute('data-answered', 'true');
+
+            // Obtenemos todas las opciones de esa pregunta y las deshabilitamos
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            // Lógica de acierto o fallo
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                // Si falla, mostramos cuál era la correcta iluminándola en verde
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            // Si ha respondido a todas, mostramos los resultados
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+
+            if (score === 10) {
+                message = "¡Nivel máximo alcanzado! Excelente, dominas los espectros atómicos a la perfección.";
+            } else if (score >= 7) {
+                message = "¡Estupendo! Tienes un muy buen nivel y conocimiento del tema.";
+            } else if (score >= 5) {
+                message = "Está bien, has aprobado, pero te recomiendo repasar algunos conceptos clave.";
+            } else {
+                message = "Debes mejorar. Revisa nuevamente la teoría sobre emisión y absorción de luz en los átomos.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Puntuación final: ${score} de ${totalQuestions}</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            // Desplazar la pantalla suavemente hacia los resultados
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
