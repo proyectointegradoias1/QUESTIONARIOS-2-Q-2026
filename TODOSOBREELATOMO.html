@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuestionario: el átomo y la configuración cuántica</title>
+<style>
+  :root { --azul:#17365d; --fondo:#f3f6fa; --verde:#d8f3dc; --verde-borde:#238636; --rojo:#ffe0e0; --rojo-borde:#c62828; --naranja:#fff0d2; --naranja-borde:#d97706; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:Arial, Helvetica, sans-serif; background:var(--fondo); color:#202733; line-height:1.5; }
+  header { background:var(--azul); color:white; padding:26px 16px; text-align:center; }
+  header h1 { margin:0 0 8px; font-size:clamp(1.35rem, 4vw, 2rem); }
+  header p { margin:0; }
+  main { max-width:900px; margin:22px auto; padding:0 14px 32px; }
+  .intro, .question, #result { background:white; border-radius:12px; padding:18px; margin-bottom:16px; box-shadow:0 2px 8px #0000000c; }
+  .question h2 { margin:0 0 12px; font-size:1.08rem; color:var(--azul); }
+  .options { display:grid; gap:9px; }
+  label.option { display:flex; align-items:flex-start; gap:10px; padding:11px 12px; border:1px solid #d4dce6; border-radius:8px; cursor:pointer; background:#fff; }
+  label.option:hover { border-color:#7b93b5; }
+  label.option input { margin-top:4px; flex:0 0 auto; }
+  label.option.correct { background:var(--verde); border:2px solid var(--verde-borde); }
+  label.option.incorrect { background:var(--rojo); border:2px solid var(--rojo-borde); }
+  label.option.reveal { background:var(--naranja); border:2px solid var(--naranja-borde); }
+  .feedback { display:none; margin-top:10px; padding:10px 12px; border-radius:7px; }
+  .feedback.ok { display:block; background:var(--verde); border-left:5px solid var(--verde-borde); }
+  .feedback.bad { display:block; background:var(--naranja); border-left:5px solid var(--naranja-borde); }
+  .buttons { display:flex; flex-wrap:wrap; gap:10px; margin:20px 0; }
+  button { border:0; border-radius:8px; padding:12px 18px; font-weight:bold; font-size:1rem; cursor:pointer; }
+  #checkBtn { background:var(--azul); color:white; }
+  #resetBtn { background:#e0e6ed; color:#17202b; }
+  button:focus, input:focus-visible { outline:3px solid #f0b429; outline-offset:2px; }
+  #result { display:none; border:2px solid var(--azul); }
+  #result h2 { margin-top:0; }
+  .score { font-size:1.65rem; font-weight:bold; color:var(--azul); }
+  .small { color:#4c5968; font-size:.94rem; }
+  footer { text-align:center; padding:18px; color:#596575; font-size:.88rem; }
+  @media print { body { background:white; } header { background:white; color:black; } button { display:none; } .intro,.question,#result { box-shadow:none; break-inside:avoid; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>El átomo y la configuración cuántica</h1>
+  <p>Cuestionario de 15 preguntas · 4 opciones · una única respuesta correcta</p>
+</header>
+<main>
+  <section class="intro">
+    <strong>Instrucciones:</strong> marca una respuesta en cada pregunta y pulsa <em>Corregir cuestionario</em>.
+    Las respuestas correctas aparecerán en verde; las incorrectas, en rojo, y se señalará la opción correcta.
+    Al final obtendrás tu nota sobre 10 y una recomendación.
+    <p class="small">Cuestionario elaborado a partir de la transcripción facilitada del vídeo.</p>
+  </section>
+  <form id="quiz" autocomplete="off"></form>
+  <div class="buttons">
+    <button id="checkBtn" type="button">Corregir cuestionario</button>
+    <button id="resetBtn" type="button">Repetir cuestionario</button>
+  </div>
+  <section id="result" aria-live="polite">
+    <h2>Resultado final</h2>
+    <p class="score" id="scoreText"></p>
+    <p id="message"></p>
+    <p id="summary" class="small"></p>
+  </section>
+</main>
+<footer>Cuestionario interactivo · Física y Química</footer>
+<script>
+const questions = [
+ {q:"¿Cuál es la clave que propone el vídeo para estudiar el átomo si no podemos observarlo directamente?", a:["Intentar fotografiar el núcleo con luz visible","Rastrear el comportamiento de sus electrones","Suponer que todos los átomos tienen la misma forma","Medir únicamente la masa del átomo"], c:1, e:"El vídeo destaca que estudiar el comportamiento de los electrones permite inferir la estructura y las propiedades del átomo."},
+ {q:"¿Qué demostraron los experimentos con tubos de gas y voltaje mencionados al principio?", a:["Que el átomo es indivisible","Que los electrones no tienen carga","Que el átomo es divisible y contiene electrones","Que toda la masa está en los electrones"], c:2, e:"Los experimentos con tubos de descarga permitieron identificar los electrones y mostraron que el átomo tenía estructura interna."},
+ {q:"¿Qué conclusión se obtuvo del experimento de la lámina de oro de Rutherford?", a:["La carga positiva está distribuida uniformemente por todo el átomo","Casi toda la masa se concentra en un núcleo muy pequeño","Los electrones permanecen dentro del núcleo","El átomo no contiene espacio vacío"], c:1, e:"La dispersión de partículas llevó a Rutherford a proponer un núcleo diminuto que concentra casi toda la masa del átomo."},
+ {q:"¿Qué propuso Niels Bohr para los electrones del átomo?", a:["Que podían tener cualquier energía sin restricciones","Que se encontraban dentro del núcleo","Que ocupaban niveles de energía definidos","Que no interactuaban con la luz"], c:2, e:"El modelo de Bohr introdujo niveles de energía permitidos para los electrones."},
+ {q:"Según el vídeo, ¿qué ocurre cuando un electrón pasa a un estado de menor energía?", a:["Emite energía en forma de luz, mediante un fotón","Desaparece del átomo","Se transforma en un protón","Aumenta siempre su energía"], c:0, e:"Al pasar a un nivel de menor energía, el electrón puede emitir un fotón cuya energía corresponde a la diferencia entre niveles."},
+ {q:"¿A qué corresponde aproximadamente la energía de 10,2 eV citada en el vídeo para el átomo de hidrógeno?", a:["A la energía necesaria para convertir un protón en neutrón","A la diferencia de energía entre el estado fundamental y el primer estado excitado","A la masa total del electrón","A la energía de cualquier fotón, sea cual sea su frecuencia"], c:1, e:"En el hidrógeno, 10,2 eV es aproximadamente la diferencia entre el estado fundamental y el primer estado excitado."},
+ {q:"¿Qué aportó la hipótesis de Louis de Broglie sobre el electrón?", a:["Que solo puede comportarse como una partícula clásica","Que tiene propiedades tanto de partícula como de onda","Que carece de masa y de carga","Que siempre sigue una órbita circular fija"], c:1, e:"De Broglie propuso la naturaleza ondulatoria de la materia: el electrón presenta propiedades de partícula y de onda."},
+ {q:"¿Qué afirma el principio de incertidumbre de Heisenberg, según el vídeo?", a:["Es posible conocer con precisión absoluta todas las propiedades del electrón","No se puede conocer simultáneamente con precisión arbitraria su posición y su momento","Los electrones nunca se mueven","La posición del electrón es siempre el centro del átomo"], c:1, e:"El principio de incertidumbre impide conocer simultáneamente con precisión arbitraria la posición y el momento de una partícula."},
+ {q:"¿Qué concepto sustituye a la idea de órbitas electrónicas fijas en el modelo cuántico?", a:["Orbitales que describen regiones de probabilidad","Trayectorias planetarias perfectamente conocidas","Capas sólidas dentro del núcleo","Caminos aleatorios que no pueden estudiarse"], c:0, e:"Los orbitales describen distribuciones de probabilidad de encontrar un electrón, no trayectorias exactas."},
+ {q:"¿Cuántos números cuánticos se utilizan para describir el estado de un electrón en un átomo?", a:["Dos","Tres","Cuatro","Seis"], c:2, e:"El estado de un electrón se describe mediante cuatro números cuánticos."},
+ {q:"¿Qué científicos se relacionan en el vídeo con las reglas de llenado electrónico, pronunciados de forma aproximada como «Paul y Hand»?", a:["Pauli y Hund","Rutherford y Bohr","Newton y Faraday","Curie y Thomson"], c:0, e:"El principio de exclusión de Pauli y la regla de Hund ayudan a determinar cómo se distribuyen los electrones en los orbitales."},
+ {q:"¿Por qué los iones N³⁻ y Mg²⁺ son isoelectrónicos?", a:["Porque tienen el mismo número de protones","Porque tienen el mismo número de neutrones necesariamente","Porque ambos tienen diez electrones","Porque ambos tienen carga cero"], c:2, e:"El nitrógeno tiene 7 electrones como átomo neutro y gana 3; el magnesio tiene 12 y pierde 2. Ambos iones quedan con 10 electrones."},
+ {q:"¿Qué determina en gran medida la configuración electrónica, según el vídeo?", a:["Solo el color de los sólidos","Las propiedades químicas y el comportamiento de los elementos","Únicamente el tamaño del núcleo","La velocidad de la luz en el vacío"], c:1, e:"La distribución electrónica ayuda a explicar la tabla periódica y muchas propiedades de la materia."},
+ {q:"Al avanzar hacia la derecha en un período de la tabla periódica, ¿qué tendencia general señala el vídeo para el radio atómico?", a:["Aumenta siempre de forma pronunciada","Permanece exactamente constante","Disminuye por el aumento de la atracción nuclear efectiva","Se vuelve infinito"], c:2, e:"En general, al avanzar hacia la derecha en un período aumenta la carga nuclear efectiva y el radio atómico disminuye."},
+ {q:"¿Qué relación plantea el vídeo entre la configuración cuántica y las propiedades de la materia?", a:["La configuración electrónica no permite predecir ninguna propiedad","La configuración cuántica funciona como un código que ayuda a predecir propiedades","Las propiedades dependen exclusivamente de la masa del núcleo","Todos los elementos tienen la misma configuración electrónica"], c:1, e:"La configuración electrónica permite comprender y predecir tendencias periódicas y muchas propiedades físicas y químicas."}
+];
+const quiz = document.getElementById("quiz");
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question";
+  section.id = "question-" + i;
+  const title = document.createElement("h2");
+  title.textContent = (i + 1) + ". " + item.q;
+  section.appendChild(title);
+  const options = document.createElement("div");
+  options.className = "options";
+  item.a.forEach((answer, j) => {
+    const label = document.createElement("label");
+    label.className = "option";
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "q" + i;
+    input.value = j;
+    input.setAttribute("aria-label", answer);
+    const span = document.createElement("span");
+    span.textContent = String.fromCharCode(65 + j) + ") " + answer;
+    label.appendChild(input);
+    label.appendChild(span);
+    options.appendChild(label);
+  });
+  section.appendChild(options);
+  const feedback = document.createElement("div");
+  feedback.className = "feedback";
+  feedback.id = "feedback-" + i;
+  section.appendChild(feedback);
+  quiz.appendChild(section);
+});
+let corrected = false;
+document.getElementById("checkBtn").addEventListener("click", () => {
+  if (corrected) return;
+  let score = 0, answered = 0;
+  questions.forEach((item, i) => {
+    const section = document.getElementById("question-" + i);
+    const labels = section.querySelectorAll("label.option");
+    const selected = section.querySelector('input[name="q' + i + '"]:checked');
+    const feedback = document.getElementById("feedback-" + i);
+    labels.forEach((label, j) => {
+      const input = label.querySelector("input");
+      input.disabled = true;
+      if (j === item.c) label.classList.add("correct");
+      if (selected && Number(selected.value) === j && j !== item.c) label.classList.add("incorrect");
+    });
+    if (selected) {
+      answered++;
+      if (Number(selected.value) === item.c) {
+        score++;
+        feedback.className = "feedback ok";
+        feedback.textContent = "¡Correcto! " + item.e;
+      } else {
+        feedback.className = "feedback bad";
+        feedback.textContent = "Respuesta incorrecta. La opción correcta está marcada en verde. " + item.e;
+      }
+    } else {
+      feedback.className = "feedback bad";
+      feedback.textContent = "Sin responder. La opción correcta está marcada en verde. " + item.e;
+    }
+  });
+  corrected = true;
+  const grade = score / questions.length * 10;
+  document.getElementById("scoreText").textContent = score + " de " + questions.length + " respuestas correctas · Nota: " + grade.toLocaleString("es-ES", {minimumFractionDigits:1, maximumFractionDigits:1}) + " / 10";
+  let message;
+  if (grade >= 9) message = "¡Excelente! Dominas muy bien las ideas principales del vídeo. ¡Sigue así!";
+  else if (grade >= 7) message = "¡Muy bien! Tienes una buena comprensión. Repasa las preguntas falladas para afianzar los detalles.";
+  else if (grade >= 5) message = "Aprobado. Conviene repasar los conceptos que has fallado y volver a revisar esos fragmentos del vídeo.";
+  else message = "Te conviene volver a ver el vídeo y estudiar los conceptos principales antes de repetir el cuestionario. ¡Puedes mejorar!";
+  document.getElementById("message").textContent = message;
+  document.getElementById("summary").textContent = "Has contestado " + answered + " de " + questions.length + " preguntas. Cada pregunta vale " + (10/questions.length).toLocaleString("es-ES", {maximumFractionDigits:2}) + " puntos sobre la nota final.";
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").scrollIntoView({behavior:"smooth", block:"start"});
+  document.getElementById("checkBtn").disabled = true;
+});
+document.getElementById("resetBtn").addEventListener("click", () => {
+  corrected = false;
+  quiz.reset();
+  questions.forEach((_, i) => {
+    const section = document.getElementById("question-" + i);
+    section.querySelectorAll("label.option").forEach(label => {
+      label.classList.remove("correct", "incorrect", "reveal");
+      label.querySelector("input").disabled = false;
+    });
+    const feedback = document.getElementById("feedback-" + i);
+    feedback.className = "feedback";
+    feedback.textContent = "";
+  });
+  document.getElementById("result").style.display = "none";
+  document.getElementById("checkBtn").disabled = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+</script>
+</body>
+</html>
