@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario: Todo sobre el Átomo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        /* Clases dinámicas añadidas por JavaScript */
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario: Todo sobre el Átomo</h1>
+
+    <div id="quiz">
+        <!-- Pregunta 1 -->
+        <div class="question-container">
+            <div class="question-text">1. ¿Qué experimento demostró por primera vez que el átomo es divisible y contiene electrones?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El experimento de la lámina de oro.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) El tubo de gas con voltaje.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El estudio de los números cuánticos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La difracción de la luz solar.</div>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div class="question-container">
+            <div class="question-text">2. Según el vídeo, ¿qué conclusión principal se extrajo del experimento de la lámina de oro de Rutherford?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Que el átomo está formado por niveles fijos de energía.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Que el electrón se comporta como una onda.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Que casi toda la masa reside en un núcleo minúsculo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Que la materia está distribuida uniformemente.</div>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div class="question-container">
+            <div class="question-text">3. Según el modelo propuesto por Bohr, ¿qué emite un electrón al caer a su estado fundamental?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Un protón de alta energía.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Un neutrón libre.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Luz en forma de un fotón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Una onda gravitacional.</div>
+        </div>
+
+        <!-- Pregunta 4 -->
+        <div class="question-container">
+            <div class="question-text">4. ¿Qué demostró de Broglie acerca de la naturaleza del electrón?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Que siempre gira en órbitas circulares exactas.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Que es una partícula y una onda a la vez.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Que no posee masa alguna.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Que solo se comporta como una onda electromagnética.</div>
+        </div>
+
+        <!-- Pregunta 5 -->
+        <div class="question-container">
+            <div class="question-text">5. ¿Por qué el principio de incertidumbre de Heisenberg nos obligó a despedirnos de las órbitas y hablar de "orbitales"?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Porque el núcleo del átomo es demasiado inestable.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Porque descubrió que los átomos no tienen espacio vacío.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Porque los electrones saltan aleatoriamente de átomo en átomo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) Porque es imposible conocer su posición y velocidad exactas simultáneamente.</div>
+        </div>
+
+        <!-- Pregunta 6 -->
+        <div class="question-container">
+            <div class="question-text">6. ¿Cuántos números cuánticos utilizamos actualmente para ubicar a los electrones en orbitales tridimensionales?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Dos</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Tres</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Cuatro</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Cinco</div>
+        </div>
+
+        <!-- Pregunta 7 -->
+        <div class="question-container">
+            <div class="question-text">7. ¿Qué dictan el principio de Pauli y la regla de Hund en el contexto del átomo?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Cómo se llenan los orbitales con electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La velocidad máxima de un fotón emitido.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El número total de protones en el núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La masa atómica de un elemento.</div>
+        </div>
+
+        <!-- Pregunta 8 -->
+        <div class="question-container">
+            <div class="question-text">8. ¿Por qué se dice en el vídeo que los iones Nitrógeno -3 y Magnesio +2 son "isoelectrónicos"?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Porque pertenecen a la misma familia de metales.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Porque resultan tener la misma cantidad y configuración de electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Porque tienen exactamente el mismo número de protones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Porque ambos repelen cualquier campo electromagnético.</div>
+        </div>
+
+        <!-- Pregunta 9 -->
+        <div class="question-container">
+            <div class="question-text">9. En la tabla periódica, al desplazarnos hacia la derecha, ¿qué le ocurre al radio del átomo?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Aumenta al añadirse más capas de electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Permanece completamente constante.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Disminuye porque más protones contraen la nube electrónica.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Aumenta debido a la repulsión de los neutrones.</div>
+        </div>
+
+        <!-- Pregunta 10 -->
+        <div class="question-container">
+            <div class="question-text">10. Siguiendo el movimiento hacia la derecha en la tabla periódica, ¿qué ocurre con la energía necesaria para arrancar un electrón?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Disminuye gradualmente.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Se dispara bruscamente.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Se vuelve completamente nula.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Se mantiene igual que a la izquierda.</div>
+        </div>
+    </div>
+
+    <!-- Contenedor para mostrar los resultados -->
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            const questionContainer = selectedOption.parentElement;
+            
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            questionContainer.setAttribute('data-answered', 'true');
+
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+
+            if (score === 10) {
+                message = "¡Nivel máximo alcanzado! Has comprendido la teoría cuántica y atómica a la perfección.";
+            } else if (score >= 7) {
+                message = "¡Estupendo! Tienes un muy buen nivel sobre la estructura del átomo.";
+            } else if (score >= 5) {
+                message = "Está bien, has aprobado, pero repasar el vídeo una vez más te vendría genial.";
+            } else {
+                message = "Debes mejorar. Te animo a volver a ver el vídeo detenidamente para afianzar los conceptos.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Puntuación final: ${score} de ${totalQuestions}</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
