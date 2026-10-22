@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario: Apantallamiento y Carga Nuclear Efectiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        /* Clases dinámicas añadidas por JavaScript */
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario: Propiedades Periódicas (Apantallamiento y Z efectiva)</h1>
+
+    <div id="quiz">
+        <!-- Pregunta 1 -->
+        <div class="question-container">
+            <div class="question-text">1. Según el vídeo, ¿qué interacción se produce entre los electrones de un mismo átomo?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Se atraen entre sí debido a sus cargas.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Se repelen porque tienen cargas del mismo signo (negativas).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Se anulan mutuamente generando neutrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) No interactúan de ninguna manera entre ellos.</div>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div class="question-container">
+            <div class="question-text">2. ¿Qué es lo que produce principalmente el efecto de "apantallamiento" en un átomo?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Las repulsiones entre los electrones del átomo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La fuerte atracción de los protones del núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) La cantidad de neutrones presentes en el núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El choque de los electrones con partículas externas.</div>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div class="question-container">
+            <div class="question-text">3. ¿Qué representa la "carga nuclear efectiva" (Z*)?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La suma total de protones y electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La carga de todos los neutrones del núcleo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) La carga positiva neta que experimenta un electrón en un átomo polielectrónico.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La carga negativa total de los electrones de valencia.</div>
+        </div>
+
+        <!-- Pregunta 4 -->
+        <div class="question-container">
+            <div class="question-text">4. ¿Cuál es la fórmula para calcular la carga nuclear efectiva?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Z* = Z + A (Número atómico más apantallamiento)</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Z* = Z - A (Número atómico menos apantallamiento)</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Z* = A - Z (Apantallamiento menos número atómico)</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Z* = Z x A (Número atómico por apantallamiento)</div>
+        </div>
+
+        <!-- Pregunta 5 -->
+        <div class="question-container">
+            <div class="question-text">5. ¿Qué ocurre con la carga nuclear efectiva a medida que descendemos por un grupo en la tabla periódica (ej. del Sodio al Potasio)?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Permanece aproximadamente constante.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Disminuye drásticamente.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Aumenta al doble en cada salto.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Se vuelve negativa.</div>
+        </div>
+
+        <!-- Pregunta 6 -->
+        <div class="question-container">
+            <div class="question-text">6. Al comparar átomos en un mismo periodo de izquierda a derecha, ¿cómo varía la carga nuclear efectiva?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Disminuye de izquierda a derecha.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Se mantiene igual en todo el periodo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Aumenta de izquierda a derecha.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Sube y baja alternativamente.</div>
+        </div>
+
+        <!-- Pregunta 7 -->
+        <div class="question-container">
+            <div class="question-text">7. En la fórmula Z* = Z - A, ¿qué representa la letra Z?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) El número atómico (número de protones).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El número de neutrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El peso atómico del elemento.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El número de orbitales del átomo.</div>
+        </div>
+
+        <!-- Pregunta 8 -->
+        <div class="question-container">
+            <div class="question-text">8. Cuando el átomo es neutro, ¿qué podemos deducir sobre sus electrones?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Que tiene el doble de electrones que de protones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Que no tiene electrones en el último nivel.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Que el número de electrones (cargas negativas) es igual al número de protones (cargas positivas).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Que sus electrones no sufren repulsión.</div>
+        </div>
+
+        <!-- Pregunta 9 -->
+        <div class="question-container">
+            <div class="question-text">9. Según la explicación del vídeo para el apantallamiento de los electrones, los electrones internos (de niveles inferiores)...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) No apantallan en absoluto al electrón externo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Apantallan fuertemente al electrón más externo (valor aprox. 1 cada uno).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Se sienten atraídos por el electrón externo y lo acercan al núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Salen expulsados del átomo al repelerse con los externos.</div>
+        </div>
+
+        <!-- Pregunta 10 -->
+        <div class="question-container">
+            <div class="question-text">10. ¿Por qué es fundamental entender la carga nuclear efectiva y el apantallamiento?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Solo sirve para calcular el peso exacto de un átomo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Es un concepto obsoleto que ya no se usa.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Porque permite entender cómo varían todas las propiedades periódicas (radio, afinidad electrónica, etc.).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Porque explica por qué el núcleo del átomo es puro vacío.</div>
+        </div>
+    </div>
+
+    <!-- Contenedor para mostrar los resultados -->
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            const questionContainer = selectedOption.parentElement;
+            
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            questionContainer.setAttribute('data-answered', 'true');
+
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+
+            if (score === 10) {
+                message = "¡Perfecto! Has comprendido el tema a la perfección.";
+            } else if (score >= 7) {
+                message = "Bastante bien, tienes una buena base de conocimientos.";
+            } else if (score >= 5) {
+                message = "Bien, aunque puedes mejorar. Un pequeño repaso te vendrá genial.";
+            } else {
+                message = "Debes estudiar más o mira el vídeo de nuevo para asentar los conceptos.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Puntuación final: ${score} de ${totalQuestions}</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
