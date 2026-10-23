@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario 4: Energía, Afinidad y Electronegatividad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario 4: Energía, Afinidad y Electronegatividad</h1>
+
+    <div id="quiz">
+        
+        <div class="question-container">
+            <div class="question-text">1. ¿Qué se define como 'energía de ionización'?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La energía que el átomo desprende al ganar protones.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) La energía que hay que dar a un átomo gaseoso para arrancarle un electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El calor desprendido al enfriar un ión.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La fuerza del núcleo en estado sólido.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">2. ¿En qué dirección crece la energía de ionización en la tabla periódica?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Hacia abajo y a la izquierda.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Solo hacia abajo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Hacia el centro de los metales de transición.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) Hacia arriba y hacia la derecha.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">3. ¿Por qué cuesta más arrancar un electrón en la parte superior derecha de la tabla?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Porque los electrones están más alejados del núcleo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Porque los electrones están más cerca del núcleo y muy atraídos (radio más pequeño).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Porque en esa zona no hay electrones, solo protones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Porque los gases nobles regalan sus electrones fácilmente.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">4. La afinidad electrónica es una medida de...</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) La capacidad o facilidad de un átomo para recibir electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Lo rápido que el núcleo puede emitir luz.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El peso que gana un átomo al formar un catión.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La facilidad del átomo para ceder sus protones.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">5. ¿Hacia dónde crece la tendencia a aceptar electrones (afinidad electrónica) en la tabla?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Hacia arriba y a la derecha, acercándose a la estructura de gas noble.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Hacia abajo a la izquierda.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Aumenta al descender por los halógenos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Disminuye hacia los no metales.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">6. ¿Cómo se define la electronegatividad?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El tiempo que tarda un átomo en reaccionar.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La cantidad de electrones de valencia que tiene un átomo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) La tendencia de un átomo a atraer los electrones de un átomo cercano.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La repulsión absoluta entre dos cationes.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">7. Según lo explicado, ¿cuál es el átomo considerado como el más electronegativo?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El hidrógeno.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El hierro.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El francio.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) El flúor.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">8. El elemento menos electronegativo (o el más electropositivo), con mucha tendencia a perder electrones, es el...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Cloro.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Oxígeno.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Francio.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Cobre.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">9. ¿Hacia dónde aumenta el 'carácter metálico' en la tabla periódica?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Hacia la derecha y hacia arriba.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Hacia la izquierda y hacia abajo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Solo se da en la primera fila superior.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) En los halógenos exclusivamente.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">10. Los elementos que están situados en el triángulo de la parte superior derecha de la tabla se consideran...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Metales alcalinos.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) No metales.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Tierras raras.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Metales de transición puros.</div>
+        </div>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            const questionContainer = selectedOption.parentElement;
+            
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            questionContainer.setAttribute('data-answered', 'true');
+
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+
+            if (score === 10) {
+                message = "¡Perfecto! Has comprendido el tema a la perfección.";
+            } else if (score >= 7) {
+                message = "Bastante bien, tienes una buena base de conocimientos.";
+            } else if (score >= 5) {
+                message = "Bien, aunque puedes mejorar. Un pequeño repaso te vendrá genial.";
+            } else {
+                message = "Debes estudiar más o mira el vídeo de nuevo para asentar los conceptos.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Puntuación final: ${score} de ${totalQuestions}</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
