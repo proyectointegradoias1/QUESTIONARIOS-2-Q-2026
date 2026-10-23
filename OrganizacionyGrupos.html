@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario 1: Grupos y Periodos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario 1: Grupos y Periodos</h1>
+
+    <div id="quiz">
+        
+        <div class="question-container">
+            <div class="question-text">1. ¿Cuál es el criterio principal por el que están ordenados los elementos en la tabla periódica?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Según su número másico y densidad.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Según propiedades químicas y su número atómico.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Por orden alfabético de sus símbolos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Únicamente por su fecha de descubrimiento.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">2. En la tabla periódica, a las filas horizontales se les llama...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Grupos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Bloques.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Periodos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Familias.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">3. Las columnas verticales (numeradas del 1 al 18) reciben el nombre de...</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Grupos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Periodos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Niveles.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Kernel.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">4. ¿Qué nombre recibe el grupo 1 de la tabla periódica?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Gases nobles.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Alcalinotérreos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Metales de transición.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) Alcalinos.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">5. Los elementos comprendidos entre los grupos 3 y 12 se conocen como...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) No metales.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Metales de transición.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Lantánidos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Gases nobles.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">6. ¿Dónde se suelen representar los lantánidos y actínidos para que la tabla sea más compacta?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) En la parte superior, encima del hidrógeno.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Mezclados con los no metales a la derecha.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) En dos filas separadas en la parte inferior de la tabla.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) En la primera columna de la izquierda.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">7. Las dos primeras columnas (grupos 1 y 2) corresponden al llenado de los orbitales de tipo...</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) s</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) p</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) d</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) f</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">8. El bloque de los orbitales 'p' se ubica en...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Las columnas centrales (3 al 12).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Las dos primeras columnas (1 y 2).</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Las columnas de la derecha (13 al 18).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Las filas inferiores sacadas de la tabla.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">9. Según el vídeo, los electrones más internos del átomo que son 'intocables' y estáticos se engloban en el concepto de...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Electrones de valencia.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Kernel.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Protones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Isótopos.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">10. ¿Qué nombre reciben los electrones más externos, los cuales podemos mover y utilizar en las reacciones químicas?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Kernel.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Electrones de valencia.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Electrones apantallados.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Neutrones.</div>
+        </div>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            const questionContainer = selectedOption.parentElement;
+            
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            questionContainer.setAttribute('data-answered', 'true');
+
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+
+            if (score === 10) {
+                message = "¡Perfecto! Has comprendido el tema a la perfección.";
+            } else if (score >= 7) {
+                message = "Bastante bien, tienes una buena base de conocimientos.";
+            } else if (score >= 5) {
+                message = "Bien, aunque puedes mejorar. Un pequeño repaso te vendrá genial.";
+            } else {
+                message = "Debes estudiar más o mira el vídeo de nuevo para asentar los conceptos.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Puntuación final: ${score} de ${totalQuestions}</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
