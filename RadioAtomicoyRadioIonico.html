@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario 3: Radio Atómico e Iónico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario 3: Radio Atómico e Iónico</h1>
+
+    <div id="quiz">
+        
+        <div class="question-container">
+            <div class="question-text">1. ¿Cómo varía el tamaño (radio atómico) a medida que bajamos en un mismo grupo o columna?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Disminuye, porque los electrones caen al núcleo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Aumenta hacia abajo, ya que se añaden capas u orbitales de mayor número n.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Permanece constante en toda la columna.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Disminuye y luego aumenta de forma aleatoria.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">2. En un mismo periodo (fila), ¿qué ocurre con el radio atómico a medida que nos desplazamos hacia la derecha?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Aumenta al incorporar más electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Se mantiene inalterado.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Disminuye, porque aumenta la carga nuclear efectiva y atrae más a la corteza.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Aumenta exponencialmente.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">3. Al avanzar a la derecha en un periodo, los electrones internos (kernel)...</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Son siempre los mismos para los elementos de esa fila.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Aumentan en número drásticamente.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Se pierden hacia el exterior.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Cambian su carga a positiva.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">4. El radio iónico mide el tamaño de...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Una molécula entera.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El núcleo de un átomo exclusivamente.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Un átomo que ha ganado o perdido electrones (un ión).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Un enlace covalente.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">5. Si a un átomo neutro le quitamos electrones formamos un catión. ¿Qué le ocurre a su tamaño?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Aumenta significativamente.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Permanece igual.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Se contrae, haciéndose más pequeño al haber menos repulsión electrónica.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El núcleo se expande.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">6. Si a un átomo neutro le añadimos electrones (formando un anión), ¿qué ocurre con su radio?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Se reduce a la mitad.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Se hace más grande porque aumenta la repulsión entre electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Su radio no se ve afectado.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Desaparecen sus orbitales externos.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">7. Al comparar un anión de un elemento con 1 carga negativa y otro anión del mismo elemento con 2 cargas negativas...</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) El de dos cargas negativas será aún más grande.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El de dos cargas negativas será más pequeño.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Ambos tendrán el mismo tamaño exacto.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Se anulan y vuelven al tamaño neutro.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">8. Sabiendo las variaciones en la tabla, el átomo de cesio (abajo a la izquierda) será...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Más pequeño que el de flúor (arriba derecha).</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Más grande que el de oxígeno.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Del mismo tamaño que los gases nobles superiores.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El átomo más pequeño de toda la tabla.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">9. En un grupo o columna, la principal razón por la que el átomo es más grande al bajar es...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La disminución de los neutrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La pérdida de protones del núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) La creación de moléculas unidas.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) Que los orbitales (capas) van siendo progresivamente mayores (n=1, n=2, n=3...).</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">10. ¿Qué provoca que el radio atómico disminuya de izquierda a derecha en una fila?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La contracción del núcleo por falta de neutrones.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Una mayor carga nuclear efectiva, que tira de los electrones con más fuerza.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El aumento exagerado del apantallamiento.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Que se pierden niveles de energía completos.</div>
+        </div>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            const questionContainer = selectedOption.parentElement;
+            
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            questionContainer.setAttribute('data-answered', 'true');
+
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+
+            if (score === 10) {
+                message = "¡Perfecto! Has comprendido el tema a la perfección.";
+            } else if (score >= 7) {
+                message = "Bastante bien, tienes una buena base de conocimientos.";
+            } else if (score >= 5) {
+                message = "Bien, aunque puedes mejorar. Un pequeño repaso te vendrá genial.";
+            } else {
+                message = "Debes estudiar más o mira el vídeo de nuevo para asentar los conceptos.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Puntuación final: ${score} de ${totalQuestions}</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
