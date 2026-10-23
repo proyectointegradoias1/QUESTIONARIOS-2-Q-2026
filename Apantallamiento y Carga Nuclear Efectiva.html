@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario 2: Apantallamiento y Carga Efectiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario 2: Apantallamiento y Carga Efectiva</h1>
+
+    <div id="quiz">
+        
+        <div class="question-container">
+            <div class="question-text">1. ¿Qué es el apantallamiento en un átomo?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La atracción magnética del núcleo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) La repulsión que ejercen los electrones entre sí (repulsión interelectrónica).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El choque de protones y neutrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La energía necesaria para crear un ión.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">2. Entre el núcleo y los electrones existe una interacción de...</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Atracción, por tener cargas opuestas.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Repulsión, por tener la misma carga.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Anulación completa de fuerzas.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Interacción nula.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">3. Si intentamos quitar un electrón a un átomo neutro, costará...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Más que arrancar un segundo electrón después.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Menos que arrancar un segundo electrón, porque inicialmente hay más repulsión entre ellos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Lo mismo, porque la carga del núcleo no cambia.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Cero energía, los suelta espontáneamente.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">4. ¿Cómo se calcula conceptualmente la 'carga nuclear efectiva'?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Es la carga real multiplicada por el apantallamiento.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Sumando los electrones y los protones.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Es la carga real del núcleo menos el efecto de apantallamiento.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Es exactamente igual a la carga de los electrones externos.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">5. Los electrones que más contribuyen al efecto de apantallamiento son...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Los más externos (de valencia).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Los electrones que el átomo capta del exterior.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Los internos, más cercanos al núcleo (kernel).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Los que están en los orbitales 'f' de otros átomos.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">6. La interacción de atracción eléctrica entre electrones y el núcleo...</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Disminuye con el cuadrado de la distancia.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Aumenta cuanto más lejos está el electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Es constante sin importar la distancia.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Desaparece completamente en el orbital 2s.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">7. ¿Qué grupo de orbitales representan las columnas centrales de metales de transición?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Orbitales p.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Orbitales d.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Orbitales s.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Orbitales f.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">8. Las dos filas sacadas fuera en la parte inferior (lantánidos y actínidos) corresponden a los orbitales...</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) p</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) d</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) s</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) f</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">9. Según el vídeo, ¿qué dos fuerzas se contraponen dentro de un átomo?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Atracción núcleo-electrón y repulsión electrón-electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Atracción núcleo-neutrón y repulsión protón-electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Fuerza gravitatoria y fuerza magnética.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Atracción electrón-electrón y repulsión núcleo-núcleo.</div>
+        </div>
+        <div class="question-container">
+            <div class="question-text">10. ¿De dónde surge la necesidad de hablar de 'carga nuclear efectiva' en lugar de usar solo la carga del núcleo?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) De la existencia de isótopos.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Porque el núcleo cambia su número de protones constantemente.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Porque los electrones se repelen entre sí, reduciendo el efecto de atracción real del núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Por el peso de los neutrones.</div>
+        </div>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 10;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            const questionContainer = selectedOption.parentElement;
+            
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            questionContainer.setAttribute('data-answered', 'true');
+
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+
+            if (score === 10) {
+                message = "¡Perfecto! Has comprendido el tema a la perfección.";
+            } else if (score >= 7) {
+                message = "Bastante bien, tienes una buena base de conocimientos.";
+            } else if (score >= 5) {
+                message = "Bien, aunque puedes mejorar. Un pequeño repaso te vendrá genial.";
+            } else {
+                message = "Debes estudiar más o mira el vídeo de nuevo para asentar los conceptos.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Puntuación final: ${score} de ${totalQuestions}</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
