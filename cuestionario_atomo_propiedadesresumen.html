@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario: El Átomo y Propiedades Periódicas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .option {
+            background-color: #e9ecef;
+            border: 2px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #dbe0e5;
+        }
+        .correct {
+            background-color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+            color: white;
+        }
+        .incorrect {
+            background-color: #FF9800 !important;
+            border-color: #FF9800 !important;
+            color: white;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        #results {
+            display: none;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #results h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        #results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cuestionario: El Átomo y Propiedades Periódicas</h1>
+
+    <div id="quiz">
+        <div class="question-container">
+            <div class="question-text">1. En la notación atómica, ¿qué representa la letra Z?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El número másico (protones + neutrones).</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) El número atómico (protones en el núcleo).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El exceso de carga del átomo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El símbolo del elemento químico.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">2. ¿Qué característica define a los isótopos?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Tienen igual número másico pero distinto número atómico.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Tienen diferente número de protones.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Tienen igual número atómico Z pero distinto número másico A (diferente número de neutrones).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Son átomos cargados eléctricamente.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">3. Según la definición proporcionada, ¿qué es un orbital?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La trayectoria circular exacta por donde pasa el electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El nivel de energía más externo del átomo.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) La zona del espacio en la que la probabilidad de encontrar al electrón es máxima.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La carga efectiva que siente el electrón.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">4. ¿Qué indica el número cuántico secundario o azimutal (l)?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La energía total del electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La orientación magnética del orbital en el espacio.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) El sentido de giro del electrón (spin).</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">D) La forma geométrica del orbital en el que se mueve el electrón.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">5. ¿Qué establece el Principio de Exclusión de Pauli?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Los electrones ocupan siempre los subniveles de mayor energía primero.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Dos electrones de un mismo átomo no pueden tener los cuatro números cuánticos iguales.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Los electrones se colocan lo más desapareados posible en orbitales de igual energía.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) En un orbital pueden entrar hasta tres electrones.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">6. Al principio que dicta que los electrones entran en orbitales degenerados ocupando el mayor número posible de ellos (desapareados), se le llama:</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Principio de exclusión de Pauli.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Reglas de Aufbau.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Principio de máxima multiplicidad de Hund.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Principio de apantallamiento.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">7. ¿Qué se entiende por "capa de valencia"?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El primer nivel de energía (n=1).</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) La capa más externa, correspondiente al valor de "n" más grande.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Exclusivamente los orbitales d de cualquier nivel.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Cualquier capa que contenga electrones desapareados.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">8. ¿Qué son las configuraciones isoelectrónicas?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Configuraciones donde todos los electrones tienen el mismo espín.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Configuraciones exclusivas de los metales alcalinos.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Configuraciones electrónicas iguales para átomos diferentes (generalmente iones).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Átomos con el mismo número másico.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">9. El Cróno (Cr) y el Cobre (Cu) presentan configuraciones anómalas. Esto se debe a que:</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Los orbitales degenerados semillenos o llenos tienen una mayor estabilidad.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Pierden fácilmente electrones de los orbitales "p".</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) No cumplen el principio de exclusión de Pauli.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Son gases nobles con capa completa.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">10. En cuanto a la "Carga Nuclear Efectiva", ¿cómo varía en un periodo?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Disminuye considerablemente.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Prácticamente no varía.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) Aumenta, puesto que aumenta el número atómico y el apantallamiento interno se mantiene.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Aumenta al doble por cada elemento.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">11. ¿Qué es el "apantallamiento" de un electrón?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Las repulsiones ejercidas por los electrones entre el núcleo y él, que disminuyen la atracción nuclear.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La fuerza magnética que une a dos electrones del mismo orbital.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) La energía necesaria para sacar a un electrón del núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) El choque continuo del electrón contra el núcleo.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">12. ¿Cómo varía el radio atómico a lo largo de un periodo de la tabla periódica?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Aumenta porque se añaden capas.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Disminuye al aumentar la carga nuclear efectiva, que atrae más a los electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Se mantiene constante en todo el periodo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Disminuye y luego vuelve a aumentar.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">13. Al comparar el radio de un catión (ión positivo) con el de su átomo neutro correspondiente:</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El catión es mayor.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) El catión es menor.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Ambos tienen exactamente el mismo radio.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Depende exclusivamente del nivel s o p en el que se encuentre.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">14. ¿Qué ocurre con el radio en un grupo al descender por él?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) El radio aumenta, ya que los electrones más alejados están menos retenidos por el núcleo.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) El radio disminuye fuertemente.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Se mantiene invariable porque aumenta la electronegatividad.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Disminuye en los metales y aumenta en los no metales.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">15. El "Potencial de Ionización" se define como:</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) La energía que el átomo libera al ganar un electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La fuerza de repulsión entre dos cationes.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) La energía necesaria para arrancar un electrón de un elemento en estado gaseoso.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La capacidad de atraer los electrones de un enlace.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">16. ¿Cómo varía la afinidad electrónica en un periodo?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Disminuye a causa de la repulsión electrónica.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Aumenta con la carga nuclear efectiva, brindando más atracción y estabilidad al ganar el electrón.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Permanece constante al ser una energía negativa.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Solo es alta en los metales alcalinos.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">17. ¿Qué característica define a los elementos con alto "Carácter Metálico"?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Tienen potencial de ionización bajo y afinidad electrónica baja o nula.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Tienen alta electronegatividad.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Tienen facilidad para reducirse y ganar electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Poseen potenciales de ionización muy altos.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">18. La "Electronegatividad" se describe en el documento como:</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) El número de electrones que un átomo pierde espontáneamente.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) La tendencia a ceder electrones en un enlace metálico.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">C) La capacidad que tiene un átomo de atraer los electrones del enlace en el que participa.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) La diferencia de masa entre protones y neutrones.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">19. Respecto al "Poder Reductor", ¿por qué los metales alcalinos son los más reductores?</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">A) Porque ganan electrones con mucha facilidad.</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">B) Porque al tener potenciales de ionización bajos, ceden fácilmente sus electrones.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Porque tienen los valores más altos de afinidad electrónica.</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Por su alta concentración de neutrones.</div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text">20. Según el apunte, ¿qué elemento se destaca como el halógeno más oxidante por su alta electroafinidad?</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(this, true)">A) Flúor (F2).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">B) Cloro (Cl2).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">C) Cobre (Cu).</div>
+            <div class="option" data-correct="false" onclick="checkAnswer(this, false)">D) Bromo (Br2).</div>
+        </div>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        const totalQuestions = 20;
+
+        function checkAnswer(selectedOption, isCorrect) {
+            const questionContainer = selectedOption.parentElement;
+            
+            if (questionContainer.getAttribute('data-answered') === 'true') {
+                return;
+            }
+
+            questionContainer.setAttribute('data-answered', 'true');
+
+            const options = questionContainer.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                score++;
+            } else {
+                selectedOption.classList.add('incorrect');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const resultsDiv = document.getElementById('results');
+            let message = "";
+            let notaFinal = score * 0.5;
+
+            if (notaFinal < 5) {
+                message = "Estás suspenso. Debes repasar el documento sobre el átomo y las propiedades periódicas.";
+            } else if (notaFinal === 5) {
+                message = "Aprobado. Has respondido correctamente al 50% de las preguntas, aunque un repaso te vendría bien.";
+            } else if (notaFinal > 5 && notaFinal < 7) {
+                message = "Bien. Has demostrado un buen conocimiento del formulario.";
+            } else if (notaFinal >= 7 && notaFinal < 9) {
+                message = "Notable. Dominas muy bien los conceptos de estructura atómica y periodicidad.";
+            } else if (notaFinal >= 9) {
+                message = "¡Sobresaliente! Has comprendido el contenido a la perfección.";
+            }
+
+            resultsDiv.innerHTML = `
+                <h2>Calificación obtenida: ${notaFinal.toFixed(1)} sobre 10</h2>
+                <p>${message}</p>
+            `;
+            resultsDiv.style.display = "block";
+            
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
