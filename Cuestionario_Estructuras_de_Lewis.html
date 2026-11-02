@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuestionario: Estructuras de Lewis</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --correct: #38a169;
+      --incorrect: #dd6b20;
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #2d3748;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding: 20px;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    header h1 {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    .question-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      transition: opacity 0.3s;
+    }
+    .question-card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      color: var(--primary);
+      display: flex;
+      gap: 10px;
+    }
+    .q-num {
+      background: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option {
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fff;
+      font-size: 0.95rem;
+      text-align: left;
+      position: relative;
+    }
+    .option:hover:not(.disabled) {
+      border-color: #a0aec0;
+      background: #edf2f7;
+    }
+    .option.correct {
+      background: #c6f6d5;
+      border-color: var(--correct);
+      color: #22543d;
+      font-weight: 600;
+    }
+    .option.incorrect {
+      background: #feebc8;
+      border-color: var(--incorrect);
+      color: #7b341e;
+    }
+    .option.disabled {
+      cursor: not-allowed;
+      opacity: 0.85;
+    }
+    .option.correct::after {
+      content: " ✓";
+      font-weight: bold;
+    }
+    .option.incorrect::after {
+      content: " ✗";
+      font-weight: bold;
+    }
+    #results {
+      display: none;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border: 2px solid var(--primary);
+      margin-top: 10px;
+    }
+    #results h2 {
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-size: 1.4rem;
+    }
+    .score {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+    .message {
+      font-size: 1.1rem;
+      margin: 16px 0;
+      padding: 14px;
+      border-radius: 8px;
+      background: #edf2f7;
+    }
+    .progress {
+      text-align: center;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+      color: #718096;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.8rem;
+      color: #a0aec0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Estructuras de Lewis</h1>
+      <p>Cuestionario interactivo basado en el material de Pedro L. Rodríguez Porca (v4)</p>
+    </header>
+
+    <div class="progress" id="progress">Respondidas: 0 de 10</div>
+
+    <div id="quiz"></div>
+
+    <div id="results">
+      <h2>Resultado final</h2>
+      <div class="score" id="score">0 / 10</div>
+      <div class="message" id="message"></div>
+      <p style="margin-top:18px; font-size:0.9rem; color:#718096;">
+        Puedes repasar el documento original para reforzar los conceptos.
+      </p>
+    </div>
+
+    <footer>
+      Material de referencia: Estructuras de Lewis – Pedro L. Rodríguez Porca · v4
+    </footer>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "Según el documento, ¿cuál es la finalidad principal de las estructuras de Lewis?",
+        options: [
+          "Representar la geometría tridimensional de las moléculas",
+          "Explicar el enlace covalente mediante la compartición de pares de electrones para cerrar capa y conseguir máxima estabilidad",
+          "Calcular la masa molecular de los compuestos",
+          "Determinar el punto de ebullición de las sustancias"
+        ],
+        correct: 1
+      },
+      {
+        q: "¿Cómo se elige generalmente el átomo central al dibujar una estructura de Lewis?",
+        options: [
+          "Siempre el más electronegativo",
+          "El menos electronegativo, exceptuando el H (y generalmente el F) que siempre son terminales",
+          "El átomo con mayor número atómico",
+          "Cualquier átomo indistantemente"
+        ],
+        correct: 1
+      },
+      {
+        q: "En los compuestos orgánicos, ¿qué átomo suele ser el central (excepto en los éteres)?",
+        options: [
+          "El oxígeno",
+          "El nitrógeno",
+          "El carbono",
+          "El hidrógeno"
+        ],
+        correct: 2
+      },
+      {
+        q: "¿Cómo se calcula el número total de electrones de valencia que se deben asignar en una estructura de Lewis?",
+        options: [
+          "Sumando solo los electrones del átomo central",
+          "Sumando los electrones de valencia de todos los átomos y añadiendo o restando la carga neta de la especie",
+          "Multiplicando el número de átomos por 8",
+          "Restando los electrones de los ligandos al átomo central"
+        ],
+        correct: 1
+      },
+      {
+        q: "¿Cuál es la fórmula de la carga formal (qf) según el documento?",
+        options: [
+          "qf = nº e⁻ valencia – (nº e⁻ no enlazantes + nº enlaces)",
+          "qf = nº e⁻ valencia + nº e⁻ no enlazantes",
+          "qf = nº e⁻ enlaces – nº e⁻ no enlazantes",
+          "qf = nº e⁻ valencia × número de enlaces"
+        ],
+        correct: 0
+      },
+      {
+        q: "Según la regla 7, ¿cuándo se considera correcta una estructura de Lewis y se termina el proceso?",
+        options: [
+          "Cuando todos los átomos tienen carga formal positiva",
+          "Cuando la carga formal del átomo central es igual a la carga neta de la molécula o es negativa",
+          "Cuando hay el mayor número posible de dobles enlaces",
+          "Cuando el átomo central tiene más de 8 electrones siempre"
+        ],
+        correct: 1
+      },
+      {
+        q: "Si el átomo central es del 2º período y aún no cierra capa, ¿qué se hace según la regla 8?",
+        options: [
+          "Se elimina un ligando",
+          "Se forma un doble enlace desplazando un par no enlazante del ligando negativo al átomo central",
+          "Se añade un par de electrones extra del exterior",
+          "Se cambia el átomo central por otro más electronegativo"
+        ],
+        correct: 1
+      },
+      {
+        q: "¿Cuándo aparece el fenómeno de resonancia según el documento?",
+        options: [
+          "Cuando la molécula tiene un número impar de electrones",
+          "Cuando se pueden escribir estructuras de Lewis equivalentes porque el desplazamiento del par no enlazante puede realizarse desde dos o más ligandos idénticos",
+          "Solo en moléculas con átomos del 3º período o superior",
+          "Cuando la carga formal neta no coincide con la carga de la molécula"
+        ],
+        correct: 1
+      },
+      {
+        q: "En el procedimiento intuitivo, ¿cómo se forman los enlaces covalentes?",
+        options: [
+          "Transfiriendo completamente los electrones del átomo menos electronegativo",
+          "A partir de electrones desapareados de cada átomo para que cada uno cierre capa",
+          "Siempre formando triples enlaces",
+          "Solo mediante enlaces iónicos"
+        ],
+        correct: 1
+      },
+      {
+        q: "¿Cómo se define el número de oxidación (n.o.) de un átomo a partir de la estructura de Lewis?",
+        options: [
+          "Es siempre igual a la carga formal",
+          "Es la carga que tendría el átomo si los electrones fueran transferidos completamente en la dirección indicada por la diferencia de electronegatividad",
+          "Es el número de electrones de valencia del átomo libre",
+          "Es la suma de todos los pares no enlazantes"
+        ],
+        correct: 1
+      }
+    ];
+
+    let score = 0;
+    let answered = Array(questions.length).fill(false);
+
+    const quizEl = document.getElementById('quiz');
+    const progressEl = document.getElementById('progress');
+    const resultsEl = document.getElementById('results');
+    const scoreEl = document.getElementById('score');
+    const messageEl = document.getElementById('message');
+
+    function renderQuestion(index) {
+      const q = questions[index];
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `q${index}`;
+
+      let optionsHtml = q.options.map((opt, i) => 
+        `<button class="option" data-index="${i}" onclick="selectOption(${index}, ${i})">${opt}</button>`
+      ).join('');
+
+      card.innerHTML = `
+        <h2><span class="q-num">${index + 1}</span> ${q.q}</h2>
+        <div class="options">${optionsHtml}</div>
+      `;
+      quizEl.appendChild(card);
+    }
+
+    function selectOption(qIndex, optIndex) {
+      if (answered[qIndex]) return;
+      answered[qIndex] = true;
+
+      const q = questions[qIndex];
+      const card = document.getElementById(`q${qIndex}`);
+      const buttons = card.querySelectorAll('.option');
+
+      buttons.forEach((btn, i) => {
+        btn.classList.add('disabled');
+        btn.onclick = null;
+        if (i === q.correct) {
+          btn.classList.add('correct');
+        } else if (i === optIndex) {
+          btn.classList.add('incorrect');
+        }
+      });
+
+      if (optIndex === q.correct) {
+        score++;
+      }
+
+      const answeredCount = answered.filter(Boolean).length;
+      progressEl.textContent = `Respondidas: ${answeredCount} de ${questions.length}`;
+
+      if (answeredCount === questions.length) {
+        setTimeout(showResults, 500);
+      }
+    }
+
+    function showResults() {
+      progressEl.style.display = 'none';
+      const nota = (score / questions.length) * 10;
+      const notaStr = Number.isInteger(nota) ? nota.toString() : nota.toFixed(1);
+      scoreEl.textContent = `${notaStr} / 10`;
+
+      let msg = '';
+      if (nota < 5) {
+        msg = 'Suspenso. Debes repasar el documento sobre Estructuras de Lewis.';
+      } else if (nota === 5) {
+        msg = 'Aprobado. Has respondido correctamente al 50% de las preguntas, conviene repasar un poco.';
+      } else if (nota >= 6 && nota <= 7) {
+        msg = 'Bien. Demuestras un buen conocimiento del tema.';
+      } else if (nota > 7 && nota <= 9) {
+        msg = 'Notable. Dominas los conceptos casi a la perfección.';
+      } else {
+        msg = '¡Sobresaliente! Has comprendido el contenido de manera impecable.';
+      }
+
+      messageEl.textContent = msg;
+      resultsEl.style.display = 'block';
+      resultsEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Mostrar todas las preguntas
+    questions.forEach((_, i) => renderQuestion(i));
+  </script>
+</body>
+</html>
