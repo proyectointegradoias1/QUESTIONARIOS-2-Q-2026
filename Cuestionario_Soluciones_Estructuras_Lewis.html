@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuestionario: Soluciones de Estructuras de Lewis</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --correct: #38a169;
+      --incorrect: #dd6b20;
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #2d3748;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 820px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding: 20px;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    header h1 { font-size: 1.5rem; margin-bottom: 6px; }
+    header p { font-size: 0.95rem; opacity: 0.9; }
+    .question-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .question-card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      color: var(--primary);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .q-num {
+      background: var(--primary);
+      color: white;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fff;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+    .option:hover:not(.disabled) {
+      border-color: #a0aec0;
+      background: #edf2f7;
+    }
+    .option.correct {
+      background: #c6f6d5;
+      border-color: var(--correct);
+      color: #22543d;
+      font-weight: 600;
+    }
+    .option.incorrect {
+      background: #feebc8;
+      border-color: var(--incorrect);
+      color: #7b341e;
+    }
+    .option.disabled { cursor: not-allowed; opacity: 0.85; }
+    .option.correct::after { content: " ✓"; font-weight: bold; }
+    .option.incorrect::after { content: " ✗"; font-weight: bold; }
+    #results {
+      display: none;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border: 2px solid var(--primary);
+      margin-top: 10px;
+    }
+    #results h2 { color: var(--primary); margin-bottom: 12px; font-size: 1.4rem; }
+    .score { font-size: 2.8rem; font-weight: 700; color: var(--primary); margin: 10px 0; }
+    .message {
+      font-size: 1.1rem;
+      margin: 16px 0;
+      padding: 14px;
+      border-radius: 8px;
+      background: #edf2f7;
+    }
+    .progress {
+      text-align: center;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+      color: #718096;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.8rem;
+      color: #a0aec0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Soluciones de Estructuras de Lewis</h1>
+      <p>Cuestionario basado en el documento de ejercicios resueltos (estructuras 1-39)</p>
+    </header>
+
+    <div class="progress" id="progress">Respondidas: 0 de 12</div>
+    <div id="quiz"></div>
+
+    <div id="results">
+      <h2>Resultado final</h2>
+      <div class="score" id="score">0 / 10</div>
+      <div class="message" id="message"></div>
+      <p style="margin-top:18px; font-size:0.9rem; color:#718096;">
+        Puedes repasar el documento original de soluciones para reforzar los conceptos.
+      </p>
+    </div>
+
+    <footer>
+      Material de referencia: Soluciones ejercicios propuestos sobre estructuras Lewis
+    </footer>
+  </div>
+
+  <script>
+    // 12 preguntas → 3 correctas en A (0), 3 en B (1), 3 en C (2), 3 en D (3)
+    const questions = [
+      {
+        q: "Según el documento, ¿cuál es la estructura de Lewis correcta del Cl₂?",
+        options: [
+          "Cl–Cl con un par de electrones no enlazantes en cada Cl (enlace simple)",
+          "Cl≡Cl con triple enlace",
+          "Cl=Cl con doble enlace y sin pares no enlazantes",
+          "Cl⁺–Cl⁻ (enlace iónico)"
+        ],
+        correct: 0   // A
+      },
+      {
+        q: "¿Cómo se representa la molécula de O₂ en las soluciones del documento?",
+        options: [
+          "O–O con enlace simple",
+          "O=O con doble enlace y pares no enlazantes en cada oxígeno",
+          "O≡O con triple enlace",
+          "O₂ sin ningún enlace"
+        ],
+        correct: 1   // B
+      },
+      {
+        q: "En el documento, la estructura de N₂ muestra:",
+        options: [
+          "Un enlace simple N–N",
+          "Un enlace doble N=N",
+          "Un triple enlace N≡N con un par no enlazante en cada nitrógeno",
+          "Nitrógeno con carga formal +1 y –1"
+        ],
+        correct: 2   // C
+      },
+      {
+        q: "¿Cuál es la estructura correcta del monóxido de carbono (CO) según las soluciones?",
+        options: [
+          "C–O con enlace simple",
+          "C=O con doble enlace",
+          "C≡O⁺ con cargas formales",
+          "C≡O con triple enlace y un par no enlazante en cada átomo"
+        ],
+        correct: 3   // D
+      },
+      {
+        q: "Según el documento, el ion CN⁻ se representa como:",
+        options: [
+          "[C≡N]⁻ con triple enlace",
+          "C=N con doble enlace y carga en el carbono",
+          "C–N con enlace simple",
+          "[C≡N]⁺ con carga positiva"
+        ],
+        correct: 0   // A
+      },
+      {
+        q: "¿Qué característica destaca en las estructuras de BF₃ y BeH₂ en el documento?",
+        options: [
+          "Presentan resonancia",
+          "Están marcadas como hipovalentes (el átomo central no alcanza el octeto)",
+          "Tienen triple enlace",
+          "Son iones con carga negativa"
+        ],
+        correct: 1   // B
+      },
+      {
+        q: "En las soluciones, ¿qué moléculas/iones muestran claramente el fenómeno de resonancia?",
+        options: [
+          "Solo el Cl₂ y el O₂",
+          "Solo el CH₄ y el NH₃",
+          "NO₂⁻ y O₃ (con formas resonantes equivalentes)",
+          "Solo el CO y el N₂"
+        ],
+        correct: 2   // C
+      },
+      {
+        q: "La estructura del ozono (O₃) en el documento se representa con:",
+        options: [
+          "Un único enlace simple entre los tres oxígenos",
+          "Un triple enlace central",
+          "Tres dobles enlaces simultáneos",
+          "Dos formas resonantes con doble enlace deslocalizado (O=O–O ↔ O–O=O)"
+        ],
+        correct: 3   // D
+      },
+      {
+        q: "Según las soluciones, la molécula de H₂O se dibuja como:",
+        options: [
+          "H–O–H con dos pares no enlazantes en el oxígeno",
+          "H=O=H con dobles enlaces",
+          "H–O≡H",
+          "O con tres hidrógenos unidos"
+        ],
+        correct: 0   // A
+      },
+      {
+        q: "¿Cuál de las siguientes especies aparece en el documento con estructura de ion amonio NH₄⁺?",
+        options: [
+          "N con tres hidrógenos y un par libre",
+          "N tetraédrico unido a cuatro H, con carga positiva global [H–N–H]⁺",
+          "N≡N con carga",
+          "N con cinco enlaces"
+        ],
+        correct: 1   // B
+      },
+      {
+        q: "En el documento, el ion sulfato SO₄²⁻ se representa con:",
+        options: [
+          "Solo enlaces simples y sin cargas formales",
+          "Un átomo de azufre unido a cuatro oxígenos con dobles enlaces y carga 2–",
+          "Azufre central unido a cuatro oxígenos (estructura con carga formal 2– en el ion)",
+          "S≡O con tres oxígenos terminales"
+        ],
+        correct: 2   // C
+      },
+      {
+        q: "¿Qué molécula del documento presenta un triple enlace carbono-carbono (H–C≡C–H)?",
+        options: [
+          "El etano (C₂H₆)",
+          "El eteno (C₂H₄)",
+          "El metano (CH₄)",
+          "El etino (C₂H₂)"
+        ],
+        correct: 3   // D
+      }
+    ];
+
+    let score = 0;
+    let answered = Array(questions.length).fill(false);
+
+    const quizEl = document.getElementById('quiz');
+    const progressEl = document.getElementById('progress');
+    const resultsEl = document.getElementById('results');
+    const scoreEl = document.getElementById('score');
+    const messageEl = document.getElementById('message');
+
+    function renderQuestion(index) {
+      const q = questions[index];
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `q${index}`;
+
+      const letters = ['A', 'B', 'C', 'D'];
+      let optionsHtml = q.options.map((opt, i) => 
+        `<button class="option" onclick="selectOption(${index}, ${i})"><strong>${letters[i]})</strong> ${opt}</button>`
+      ).join('');
+
+      card.innerHTML = `
+        <h2><span class="q-num">${index + 1}</span> ${q.q}</h2>
+        <div class="options">${optionsHtml}</div>
+      `;
+      quizEl.appendChild(card);
+    }
+
+    function selectOption(qIndex, optIndex) {
+      if (answered[qIndex]) return;
+      answered[qIndex] = true;
+
+      const q = questions[qIndex];
+      const card = document.getElementById(`q${qIndex}`);
+      const buttons = card.querySelectorAll('.option');
+
+      buttons.forEach((btn, i) => {
+        btn.classList.add('disabled');
+        btn.onclick = null;
+        if (i === q.correct) {
+          btn.classList.add('correct');
+        } else if (i === optIndex) {
+          btn.classList.add('incorrect');
+        }
+      });
+
+      if (optIndex === q.correct) score++;
+
+      const answeredCount = answered.filter(Boolean).length;
+      progressEl.textContent = `Respondidas: ${answeredCount} de ${questions.length}`;
+
+      if (answeredCount === questions.length) {
+        setTimeout(showResults, 500);
+      }
+    }
+
+    function showResults() {
+      progressEl.style.display = 'none';
+      const nota = (score / questions.length) * 10;
+      const notaStr = Number.isInteger(nota) ? nota.toString() : nota.toFixed(1);
+      scoreEl.textContent = `${notaStr} / 10`;
+
+      let msg = '';
+      if (nota < 5) {
+        msg = 'Suspenso. Debes repasar el documento de soluciones de estructuras de Lewis.';
+      } else if (nota === 5) {
+        msg = 'Aprobado. Has respondido correctamente al 50% de las preguntas, conviene repasar un poco.';
+      } else if (nota >= 6 && nota <= 7) {
+        msg = 'Bien. Demuestras un buen conocimiento del tema.';
+      } else if (nota > 7 && nota <= 9) {
+        msg = 'Notable. Dominas los conceptos casi a la perfección.';
+      } else {
+        msg = '¡Sobresaliente! Has comprendido el contenido de manera impecable.';
+      }
+
+      messageEl.textContent = msg;
+      resultsEl.style.display = 'block';
+      resultsEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Renderizar todas las preguntas
+    questions.forEach((_, i) => renderQuestion(i));
+  </script>
+</body>
+</html>
